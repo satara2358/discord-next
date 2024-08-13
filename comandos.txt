@@ -9,3 +9,4 @@ int
 
 -> npm run dev
 -> npx shadcn-ui@latest add button
+-> npm install @clerk/nextjs
