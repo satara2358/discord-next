@@ -10,3 +10,7 @@ int
 -> npm run dev
 -> npx shadcn-ui@latest add button
 -> npm install @clerk/nextjs
+-> npm i next-themes || dedde || https://ui.shadcn.com/docs/dark-mode/next
+  seguir la documentacion
+-> 
+
