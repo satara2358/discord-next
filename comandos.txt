@@ -12,5 +12,11 @@ int
 -> npm install @clerk/nextjs
 -> npm i next-themes || dedde || https://ui.shadcn.com/docs/dark-mode/next
   seguir la documentacion
--> 
-
+-> npm i -D prisma
+-> npx prisma init
+-> npm install prisma typescript ts-node @types/node --save-dev
+-> npm install mongodb
+-> npm install @prisma/client
+-> npx tsc --init
+-> npx prisma generate
+-> npx prisma db pull
