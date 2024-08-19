@@ -10,7 +10,7 @@ int
 -> npm run dev
 -> npx shadcn-ui@latest add button
 -> npm install @clerk/nextjs
--> npm i next-themes || dedde || https://ui.shadcn.com/docs/dark-mode/next
+-> npm i next-themes || desde || https://ui.shadcn.com/docs/dark-mode/next
   seguir la documentacion
 -> npm i -D prisma
 -> npx prisma init
@@ -21,6 +21,10 @@ int
 -> npx prisma generate
 -> npx prisma db pull
 -> npx prisma studio || para ver los datos
+-> npx shadcn-ui@latest add dialog
+-> npx shadcn-ui@latest add input
+-> npx shadcn-ui@latest add form
+-> 
 
 --------------------------------------------
 

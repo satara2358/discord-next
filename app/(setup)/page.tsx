@@ -4,8 +4,7 @@ import { UserButton } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { initialProfile } from "@/lib/initial-profile";
 import { redirect } from "next/navigation";
-
-
+import { InitialModal } from "@/components/modals/initial-modal";
 
 const SetupPage = async () => {
   const profile = await initialProfile();
@@ -14,7 +13,7 @@ const SetupPage = async () => {
     where: {
       members: {
         some: {
-          profileId: profile.id
+          profileId: profile?.id
         }
       }
     }
@@ -29,6 +28,7 @@ const SetupPage = async () => {
      <UserButton />
      <ModeToggle/>
      <p>cualquier cosa</p>
+     <InitialModal/>
    </div>
   );
 }
