@@ -124,3 +124,6 @@ model Channel {
 }
 
 --------------------------------------------
+-> desde || https://uploadthing.com/dashboard/abcf8kkzbn/api-keys || usar API KEYS
+-> npm install uploadthing @uploadthing/react
+-> 
