@@ -5,3 +5,5 @@ const ServerIdPage = () => {
     </div>
   );
 }
+
+export default ServerIdPage;
