@@ -126,4 +126,7 @@ model Channel {
 --------------------------------------------
 -> desde || https://uploadthing.com/dashboard/abcf8kkzbn/api-keys || usar API KEYS
 -> npm install uploadthing @uploadthing/react
--> 
+-> npx prisma studio
+-> npm i axios
+-> npm i uuid
+-> npm i -D @types/uuid
