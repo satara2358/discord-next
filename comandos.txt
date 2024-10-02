@@ -130,3 +130,7 @@ model Channel {
 -> npm i axios
 -> npm i uuid
 -> npm i -D @types/uuid
+-> desde https://ui.shadcn.com/docs/components/tooltip || 
+  npx shadcn@latest add tooltip
+  npx shadcn@latest add separator
+  npx shadcn@latest add scroll-area
