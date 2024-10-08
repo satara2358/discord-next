@@ -1,15 +1,20 @@
+"use client";
 
-import { useForm } from "react-hook-form";
+import * as z from "zod";
 import axios from "axios";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
+  DialogFooter,
   DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,32 +23,28 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { FileUpload } from "../file-upload";
+
+import { Input } from "@/components/ui/input";
+import FileUpload from "../file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Please enter a name server",
+    message: "Server name is required.",
   }),
   imageUrl: z.string().min(1, {
-    message: "Please enter a image ",
+    message: "Server image is required.",
   }),
 });
 
 export const CreateServerModal = () => {
-  const { isOpen, type, onOpen, onClose } = useModal();
+  const { isOpen, onClose, type } = useModal();
+
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "createServer";
 
-  console.log("isOpen:", isOpen);
-  console.log("type:", type);
-  
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,14 +56,15 @@ export const CreateServerModal = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    // console.log(values);
     try {
       await axios.post("/api/servers", values);
 
       form.reset();
       router.refresh();
-      onClose();
+      onClose()
     } catch (error) {
-      console.log(error);
+      console.log("Error in createservermodal: ", error);
     }
   };
 
@@ -75,11 +77,12 @@ export const CreateServerModal = () => {
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center font-bold">
-            Configurar Server
+          <DialogTitle className="text-2xl font-bold text-center">
+            Customize your server
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Obtén tu servidor configurado para empezar a jugar con tus amigos
+            Give your server a personality with a name and an image. You can
+            always change it later.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -108,13 +111,13 @@ export const CreateServerModal = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Nombre del servidor
+                      Server Name
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Nombre del servidor?"
+                        placeholder="Enter server name"
                         {...field}
                       />
                     </FormControl>
@@ -125,7 +128,7 @@ export const CreateServerModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading}>
-                Crear
+                Create
               </Button>
             </DialogFooter>
           </form>
@@ -134,3 +137,5 @@ export const CreateServerModal = () => {
     </Dialog>
   );
 };
+
+export default CreateServerModal;

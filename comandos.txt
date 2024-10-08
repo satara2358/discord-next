@@ -135,3 +135,9 @@ model Channel {
   npx shadcn@latest add separator
   npx shadcn@latest add scroll-area
 -> npm i zustand
+
+
+-> npm install socket.io-client
+-> npm i @tanstack/react-query
+
+-> npm install socket.io

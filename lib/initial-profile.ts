@@ -1,28 +1,22 @@
-import { currentUser } from "@clerk/nextjs/server"
-import { db } from "./db"
-import { redirect } from "next/navigation"
-
+// import { currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { db } from "@/lib/db";
+import { currentUser, redirectToSignIn } from "@clerk/nextjs/server";
 
 export const initialProfile = async () => {
-  const user = await currentUser()
-
-  const redirectToSignIn = () => {
-    redirect('/sign-in')
-  }
+  const user = await currentUser();
 
   if (!user) {
-    redirectToSignIn()
-    return 
+    return redirectToSignIn();
   }
 
   const profile = await db.profile.findUnique({
     where: {
-      userId: user.id
-    }
-  })
+      userId: user.id,
+    },
+  });
 
   if (profile) {
-    return profile
+    return profile;
   }
 
   const newProfile = await db.profile.create({
@@ -30,9 +24,8 @@ export const initialProfile = async () => {
       userId: user.id,
       name: `${user.firstName} ${user.lastName}`,
       imageUrl: user.imageUrl,
-      email: user.emailAddresses[0].emailAddress
-    }
-  })
-
-  return newProfile
-}
+      email: user.emailAddresses[0].emailAddress,
+    },
+  });
+  return newProfile;
+};

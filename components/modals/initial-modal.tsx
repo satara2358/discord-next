@@ -1,16 +1,20 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import * as z from "zod";
 import axios from "axios";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
+  DialogFooter,
   DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,28 +22,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useState, useEffect } from "react";
-import { FileUpload } from "../file-upload";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import FileUpload from "../file-upload";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Please enter a name server",
+    message: "Server name is required.",
   }),
   imageUrl: z.string().min(1, {
-    message: "Please enter a image ",
+    message: "Server image is required.",
   }),
 });
 
-export const InitialModal = () => {
-  const [isMounted, setIsMounted] = useState(false);
-
+const InitialModal = () => {
   const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -55,6 +55,7 @@ export const InitialModal = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    // console.log(values);
     try {
       await axios.post("/api/servers", values);
 
@@ -62,21 +63,24 @@ export const InitialModal = () => {
       router.refresh();
       window.location.reload();
     } catch (error) {
-      console.log(error);
+      console.log("Error in initiamodal: ", error);
     }
   };
 
-  if (!isMounted) return null;
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Dialog open>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center font-bold">
-            Configurar Server
+          <DialogTitle className="text-2xl font-bold text-center">
+            Customize your server
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Obtén tu servidor configurado para empezar a jugar con tus amigos
+            Give your server a personality with a name and an image. You can
+            always change it later.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -105,13 +109,13 @@ export const InitialModal = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Nombre del servidor
+                      Server Name
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Nombre del servidor?"
+                        placeholder="Enter server name"
                         {...field}
                       />
                     </FormControl>
@@ -122,7 +126,7 @@ export const InitialModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading}>
-                Crear
+                Create
               </Button>
             </DialogFooter>
           </form>
@@ -131,3 +135,5 @@ export const InitialModal = () => {
     </Dialog>
   );
 };
+
+export default InitialModal;
