@@ -1,4 +1,3 @@
-"use client";
 
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -37,11 +36,14 @@ const formSchema = z.object({
 });
 
 export const CreateServerModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, type, onOpen, onClose } = useModal();
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "createServer";
 
+  console.log("isOpen:", isOpen);
+  console.log("type:", type);
+  
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,6 +60,7 @@ export const CreateServerModal = () => {
 
       form.reset();
       router.refresh();
+      onClose();
     } catch (error) {
       console.log(error);
     }
