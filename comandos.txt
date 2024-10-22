@@ -141,3 +141,6 @@ model Channel {
 -> npm i @tanstack/react-query
 
 -> npm install socket.io
+-> npx prisma generate
+-> npx prisma db push
+-> para borrar todos los datos de la base de datos || npx prisma migrate reset
